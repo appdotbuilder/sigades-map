@@ -1,11 +1,12 @@
 from app.database import create_tables
-from nicegui import ui
+from app.geo_service import GeospatialService
+from app import mapping
 
 
 def startup() -> None:
-    # this function is called before the first request
+    # Initialize database and seed default data
     create_tables()
+    GeospatialService.seed_default_layers()
 
-    @ui.page("/")
-    def index():
-        ui.label("🚧 Work in progress 🚧").style("font-size: 2rem; text-align: center; margin-top: 2rem")
+    # Create mapping application routes
+    mapping.create()
